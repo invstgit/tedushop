@@ -12,11 +12,11 @@ namespace TeduShop.Data.Infrastructure
 
         // Marks an entity as modified
         T Update(T entity);
+        void Update(T entity, params Expression<Func<T, object>>[] propertiesToNoUpdate);
+
 
         // Marks an entity to be removed
         T Delete(T entity);
-         
-        // Marks an entity to be removed by using ID
         T Delete(int id);
 
         //Delete multi records

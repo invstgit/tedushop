@@ -41,7 +41,6 @@ namespace TeduShop.Data.Infrastructure
         public virtual T Update(T entity)
         {
             T ret = dbSet.Attach(entity);
-            dataContext.Entry(entity).State = EntityState.Modified;
             return ret;
         }
 
@@ -146,6 +145,14 @@ namespace TeduShop.Data.Infrastructure
         public bool CheckContains(Expression<Func<T, bool>> predicate)
         {
             return dataContext.Set<T>().Count<T>(predicate) > 0;
+        }
+
+        public virtual void Update(T entity, params Expression<Func<T, object>>[] propertiesToNoUpdate)
+        {
+            T ret = dbSet.Attach(entity);
+            dbSet.Attach(entity);
+
+            propertiesToNoUpdate.ToList().ForEach(p => DbContext.Entry(entity).Property(p).IsModified = false);
         }
         #endregion
     }

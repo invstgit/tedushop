@@ -47,5 +47,24 @@ namespace TeduShop.UnitTest.RepositoryTest
             Assert.AreEqual("test-post-category-alias", res.Alias);
             Assert.AreEqual(true, res.Status);
         }
+
+        [TestMethod]
+        public void PostCategory_Repository_Update()
+        {
+            PostCategory postCategory = new PostCategory();
+            postCategory.ID = 2;
+            postCategory.Name = "test post category name updated";
+            postCategory.Alias = null;
+            postCategory.Status = false;
+
+            var res = _objRepository.Update(postCategory);
+            _unitOfWork.Commit();
+
+            Assert.IsNotNull(res);
+            Assert.AreEqual(2, res.ID);
+            Assert.AreEqual("test post category name updated", res.Name);
+            Assert.AreEqual("test-post-category-alias-updated", res.Alias);
+            Assert.AreEqual(false, res.Status);
+        }
     }
 }
